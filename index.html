@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CattyCode</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease forwards;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    h1, h2, h3 {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+    }
+
+    /* Header full width */
+    header {
+      width: 100%;
+      background-color: #2d2d2d;
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+      animation: fadeIn 1s ease forwards;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Inner container inside header */
+    .container {
+      max-width: 960px;
+      width: 90%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+    .nav-links a {
+      background-color: #7c3aed;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .nav-links a:hover {
+      background-color: #6d28d9;
+    }
+
+    /* Hero Section */
+    main.container {
+      max-width: 960px;
+      width: 90%;
+      margin-top: 3rem;
+      margin-bottom: 4rem;
+      animation: fadeInUp 1.2s ease forwards;
+      flex-direction: column;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+    .hero p {
+      color: #999;
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-buttons a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #22c55e;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 0.75rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+    .hero-buttons a:nth-child(2) {
+      background-color: #7c3aed;
+    }
+    .hero-buttons a:hover:nth-child(1) {
+      background-color: #16a34a;
+    }
+    .hero-buttons a:hover:nth-child(2) {
+      background-color: #6d28d9;
+    }
+
+    /* Features side-by-side grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .feature {
+      background-color: #2d2d2d;
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      animation: fadeInUp 1.5s ease forwards;
+      box-shadow: 0 0 15px rgb(124 58 237 / 0.3);
+    }
+    .feature i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+    .feature p {
+      color: #999;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .features {
+        grid-template-columns: 1fr;
+      }
+      .hero h2 {
+        font-size: 2.25rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .hero-buttons a {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>CattyCode</h1>
+      <nav class="nav-links">
+  <a href="https://cattycode.github.io/editor" target="_blank" rel="noopener noreferrer">Web Editor</a>
+  <a href="https://github.com/CattyCode" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <a href="https://github.com/CattyCode/cattycode.github.io/wiki" target="_blank" rel="noopener noreferrer">Docs</a>
+<a href="https://padlet.com/noahscratch493/cattycode-community-vfjgchcvi9tiz642" target="_blank" rel="noopener noreferrer">Share</a>
+</nav>
+
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Make Programming Fun and Accessible</h2>
+      <p>
+        CattyCode is a Blockly-based programming language that lets you create programs by connecting blocks - perfect for beginners and students!
+      </p>
+      <div class="hero-buttons">
+        <a href="https://cattycode.github.io/desktop" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-desktop"></i>
+          Download Desktop App
+        </a>
+        <a href="https://cattycode.github.io/editor" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-code"></i>
+          Try Web Editor
+        </a>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature">
+        <i class="fas fa-puzzle-piece" style="color:#3b82f6;"></i>
+        <h3>Visual Programming</h3>
+        <p>Create programs by connecting blocks together - no typing required!</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-globe" style="color:#a78bfa;"></i>
+        <h3>Web & Desktop</h3>
+        <p>Use online in your browser or download our desktop app for offline use</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-graduation-cap" style="color:#22c55e;"></i>
+        <h3>Perfect for Learning</h3>
+        <p>Designed for beginners and students taking their first steps in programming</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
