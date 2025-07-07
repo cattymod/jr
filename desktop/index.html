@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CattyMod Jr - Desktop</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    body {
+      margin: 0;
+      font-family: Roboto, Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 40px 80px;
+      box-sizing: border-box;
+    }
+
+    /* Navbar full width */
+    .header {
+      background-color: #2d2d2d;
+      padding: 1.5rem 3rem;
+      width: 100vw; /* Full viewport width */
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #444;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header a {
+      background-color: #3b82f6;
+      color: white;
+      padding: 0.75rem 2.5rem;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    }
+
+    .header a:hover {
+      background-color: #2563eb;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 120px auto 0; /* Push down for fixed header */
+      padding: 0 3rem;
+      flex-grow: 1;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 5rem;
+      padding: 0 2rem;
+    }
+
+    .intro h2 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .intro p {
+      color: #9ca3af;
+      font-size: 1.4rem;
+      margin-bottom: 3rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .btn-download {
+      background-color: #22c55e;
+      color: white;
+      padding: 1.5rem 3.5rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-radius: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-download:hover {
+      background-color: #16a34a;
+    }
+
+    .version {
+      color: #9ca3af;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4rem;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .feature-card {
+      background-color: #2d2d2d;
+      padding: 3rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-visual {
+      color: #3b82f6;
+    }
+
+    .feature-desktop {
+      color: #22c55e;
+    }
+
+    .feature-learn {
+      color: #a855f7;
+    }
+
+    .feature-card h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: #9ca3af;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* Minimal mobile tweak just to keep it readable */
+    @media (max-width: 720px) {
+      body {
+        padding: 20px 40px;
+      }
+      main {
+        padding: 0 1.5rem;
+        margin-top: 100px; /* slightly smaller top margin on mobile */
+      }
+      .features {
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>CattyMod Jr</h1>
+    <a
+      href="https://github.com/cattymod/jr/releases"
+      target="_blank"
+      rel="noopener noreferrer"
+      >View on GitHub</a
+    >
+  </header>
+  <main>
+    <section class="intro">
+      <h2>Download CattyMod Desktop</h2>
+      <p>
+        A Blockly-based programming language that makes coding fun and
+        accessible
+      </p>
+      <a
+        href="https://github.com/cattymod/jr/desktop/releases/download/v1.0.0/CattyMod-Desktop.zip"
+        class="btn-download"
+        ><i class="fas fa-download"></i> Download Latest Version</a
+      >
+      <p class="version">Version 1.0.0 (88.7 MB)</p>
+    </section>
+
+    <section class="features">
+      <div class="feature-card">
+        <i class="fas fa-puzzle-piece feature-icon feature-visual"></i>
+        <h3>Visual Programming</h3>
+        <p>Build programs by connecting blocks - no typing required!</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-laptop feature-icon feature-desktop"></i>
+        <h3>Desktop App</h3>
+        <p>Works offline on your computer with a native experience</p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-graduation-cap feature-icon feature-learn"></i>
+        <h3>Learn to Code</h3>
+        <p>Perfect for beginners and students learning to program</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
