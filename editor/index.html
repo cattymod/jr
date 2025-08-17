@@ -1,188 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CattyMod Jr v2.0</title>
-<script src="https://unpkg.com/blockly/blockly.min.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/blockly/media/css/blockly.css">
-<style>
-body {
-  margin:0; padding:0;
-  font-family:'Segoe UI', sans-serif;
-  display:flex; flex-direction:column;
-  height:100vh; background:#181818; color:#eee;
-}
-#categorySelector {
-  display:flex; gap:12px; padding:12px;
-  overflow-x:auto; background:#202020;
-  border-bottom:1px solid #333; box-shadow:0 4px 8px rgba(0,0,0,0.3);
-}
-.categoryCircle {
-  flex-shrink:0; width:50px; height:50px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  color:white; font-weight:bold; font-size:12px; cursor:pointer;
-  transition: all 0.3s ease; text-align:center; position:relative;
-  white-space:nowrap;
-}
-.categoryCircle .name { display:block; }
-.categoryCircle.open {
-  width:160px; border-radius:25px; font-size:20px;
-}
-.categoryCircle.open .name {
-  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-}
-#blocklyDiv { flex:1; width:100%; background:#1b1b1b; }
-#runCodeBtn {
-  margin:10px; padding:10px 20px; font-size:16px;
-  cursor:pointer; background:#4CAF50; color:white;
-  border:none; border-radius:8px; font-weight:bold;
-  transition:all 0.2s ease;
-}
-#runCodeBtn:hover { filter:brightness(1.2); }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CattyMod Jr - Editor</title>
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/blockly/media/css/blockly.css">
+  <style>
+    /* Basic Reset */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    
+    .blocklyMainDiv {
+      height: 500px;
+      width: 100%;
+    }
+    
+    #blocklyDiv {
+      height: 100%;
+      width: 100%;
+    }
+
+    #runCodeBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    #runCodeBtn:hover {
+      background-color: #45a049;
+    }
+
+    /* Modern flat block styles */
+    .blocklySvg {
+      border-radius: 10px;
+    }
+
+    .blocklyBlockBackground {
+      fill: #f1f1f1;
+      stroke: #ccc;
+    }
+
+    .blocklyText {
+      fill: #333;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .blocklyFieldText {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      fill: #333;
+    }
+
+    .blocklyFieldDropdown {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: #333;
+    }
+
+    .blocklyToolboxDiv {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+  </style>
 </head>
 <body>
+  <h1>CattyMod Jr</h1>
+  <div id="blocklyDiv"></div>
+  <button id="runCodeBtn">Run Code</button>
 
-<div id="categorySelector"></div>
-<div id="blocklyDiv"></div>
-<button id="runCodeBtn">Run Code</button>
-
-<script>
-const categories = [
-  {name:'Variables', color:'#ff66cc', blocks:['variables_get','variables_set'], isVariable:true},
-  {name:'Lists', color:'#4C97FF', blocks:['lists_create_empty','lists_create_with','lists_indexOf','lists_getIndex','lists_setIndex']},
-  {name:'Loops', color:'#ff8c1a', blocks:['controls_repeat_ext','controls_for','controls_forEach','controls_if']},
-  {name:'Logic', color:'#5C81A6', blocks:['logic_compare','logic_boolean','logic_negate','logic_operation']},
-  {name:'Math', color:'#5C68B2', blocks:['math_number','math_arithmetic','math_round','math_random_int']},
-  {name:'Text', color:'#5CA65C', blocks:['text','text_print','text_length','text_join']},
-  {name:'Functions', color:'#FF5B5B', blocks:[], isFunction:true}
-];
-
-const categorySelector = document.getElementById('categorySelector');
-let workspace;
-let functionsList = [];
-
-function renderCategories() {
-  categorySelector.innerHTML='';
-  categories.forEach(cat=>{
-    const div = document.createElement('div');
-    div.className='categoryCircle';
-    div.style.backgroundColor = cat.color;
-    div.innerHTML=`<span class="name">${cat.name}</span>`;
-
-    // smaller text for Variables & Functions when not selected
-    if(cat.isVariable || cat.isFunction) div.style.fontSize='9px';
-
-    div.addEventListener('click', ()=>{
-      document.querySelectorAll('.categoryCircle').forEach(c=>{
-        c.classList.remove('open');
-        if(c.dataset.type==='variable' || c.dataset.type==='function') c.style.fontSize='9px';
-      });
-      div.classList.add('open');
-      if(cat.isVariable || cat.isFunction) div.style.fontSize='20px';
-
-      if(cat.isFunction){
-        updateFunctionFlyout();
-      } else {
-        updateFlyout(cat.blocks);
-      }
+  <script>
+    // Initialise Blockly workspace
+    const workspace = Blockly.inject('blocklyDiv', {
+      toolbox: `
+        <xml>
+          <category name="Variables" colour="#ff66cc">
+            <block type="variables_get"></block>
+            <block type="variables_set"></block>
+          </category>
+          <category name="Lists" colour="#4C97FF">
+            <block type="lists_create_empty"></block>
+            <block type="lists_create_with">
+              <mutation items="3"></mutation>
+            </block>
+            <block type="lists_indexOf"></block>
+            <block type="lists_getIndex"></block>
+            <block type="lists_setIndex"></block>
+          </category>
+          <category name="Loops" colour="#ff8c1a">
+            <block type="controls_repeat_ext"></block>
+            <block type="controls_for"></block>
+            <block type="controls_forEach"></block>
+            <block type="controls_if"></block>
+          </category>
+          <category name="Logic" colour="#5C81A6">
+            <block type="logic_compare"></block>
+            <block type="logic_boolean"></block>
+            <block type="logic_negate"></block>
+            <block type="logic_operation"></block>
+          </category>
+          <category name="Math" colour="#5C68B2">
+            <block type="math_number"></block>
+            <block type="math_arithmetic"></block>
+            <block type="math_round"></block>
+            <block type="math_random_int"></block>
+          </category>
+          <category name="Text" colour="#5CA65C">
+            <block type="text"></block>
+            <block type="text_print"></block>
+            <block type="text_length"></block>
+            <block type="text_join"></block>
+          </category>
+          <category name="Functions" colour="#FF5B5B">
+            <block type="procedures_defnoreturn"></block>
+            <block type="procedures_callnoreturn"></block>
+          </category>
+        </xml>
+      `,
+      media: 'https://unpkg.com/blockly/media/',
+      trashcan: true
     });
 
-    if(cat.isVariable) div.dataset.type='variable';
-    if(cat.isFunction) div.dataset.type='function';
-
-    categorySelector.appendChild(div);
-  });
-}
-
-const flatTheme = Blockly.Theme.defineTheme('flat', {
-  'base': Blockly.Themes.Classic,
-  'blockStyles': {
-    "logic_blocks": {"colourPrimary": "#5C81A6"},
-    "loop_blocks": {"colourPrimary": "#ff8c1a"},
-    "math_blocks": {"colourPrimary": "#5C68B2"},
-    "text_blocks": {"colourPrimary": "#5CA65C"},
-    "list_blocks": {"colourPrimary": "#4C97FF"},
-    "variable_blocks": {"colourPrimary": "#ff66cc"},
-    "procedure_blocks": {"colourPrimary": "#FF5B5B"},
-  },
-  'componentStyles': {
-    "workspaceBackgroundColour": "#1b1b1b",
-    "toolboxBackgroundColour": "#202020",
-    "toolboxForegroundColour": "#eee",
-    "flyoutBackgroundColour": "#202020",
-    "flyoutForegroundColour": "#eee",
-    "scrollbarColour": "#333",
-    "insertionMarkerColour": "#fff",
-    "markerColour": "#fff",
-    "cursorColour": "#fff"
-  },
-  'fontStyle': { "family": "Segoe UI", "weight": "normal", "size": 13 }
-});
-
-workspace = Blockly.inject('blocklyDiv', {
-  toolbox: '<xml></xml>',
-  scrollbars: true,
-  horizontalLayout: true,
-  toolboxPosition: 'top',
-  theme: flatTheme
-});
-
-function updateFlyout(blockTypes){
-  const xml = document.createElement('xml');
-  blockTypes.forEach(type=>{
-    const block = document.createElement('block');
-    block.setAttribute('type', type);
-    xml.appendChild(block);
-  });
-  workspace.updateToolbox(xml);
-  workspace.toolbox_.flyout_.horizontalLayout_ = true;
-  workspace.toolbox_.flyout_.reflow();
-}
-
-function updateFunctionFlyout(){
-  const xml = document.createElement('xml');
-
-  const btn = document.createElement('button');
-  btn.setAttribute('text','Add Function');
-  btn.setAttribute('callbackKey','ADD_FUNC');
-  xml.appendChild(btn);
-
-  workspace.registerButtonCallback('ADD_FUNC', ()=>{
-    const funcName = 'myFunc'+(functionsList.length+1);
-    functionsList.push(funcName);
-
-    const block = workspace.newBlock('procedures_defnoreturn');
-    block.setFieldValue(funcName,'NAME');
-    block.initSvg(); block.render();
-
-    const callBlock = document.createElement('block');
-    callBlock.setAttribute('type','procedures_callnoreturn');
-    const mutation = document.createElement('mutation');
-    mutation.setAttribute('name',funcName);
-    callBlock.appendChild(mutation);
-    xml.appendChild(callBlock);
-
-    workspace.updateToolbox(xml);
-    workspace.toolbox_.flyout_.horizontalLayout_ = true;
-    workspace.toolbox_.flyout_.reflow();
-  });
-
-  workspace.updateToolbox(xml);
-  workspace.toolbox_.flyout_.horizontalLayout_ = true;
-  workspace.toolbox_.flyout_.reflow();
-}
-
-// Run code
-document.getElementById('runCodeBtn').addEventListener('click', ()=>{
-  const code = Blockly.JavaScript.workspaceToCode(workspace);
-  try { eval(code); } catch(e){ alert('Error: '+e.message); }
-});
-
-renderCategories();
-</script>
-
-
+    
+    // Run the generated code when the "Run Code" button is clicked
+    document.getElementById('runCodeBtn').addEventListener('click', function() {
+      const code = Blockly.JavaScript.workspaceToCode(workspace);
+      try {
+        eval(code);  // Run the generated JavaScript code
+      } catch (e) {
+        console.error(`Error executing code: ${e.message}`);
+      }
+    });
+  </script>
 </body>
 </html>
